@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import databaseConfig from './config/database.config';
-import { DatabaseConfigService } from './config/database.config.service';
+import { DatabaseFactory } from './setup/database.factory';
 import { MessageModule } from './message/message.module';
 import serverConfig from './config/server.config';
 
@@ -14,7 +14,7 @@ import serverConfig from './config/server.config';
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useClass: DatabaseConfigService,
+      useClass: DatabaseFactory,
       inject: [ConfigService],
     }),
     MessageModule,
