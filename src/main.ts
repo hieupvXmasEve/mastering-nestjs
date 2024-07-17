@@ -12,7 +12,14 @@ async function server() {
   const serverConfig = configService.getOrThrow<ServerConfig>(ServerConfigName);
 
   // Enable validation globally
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      forbidUnknownValues: true,
+    }),
+  );
 
   await app.listen(serverConfig.port);
 }

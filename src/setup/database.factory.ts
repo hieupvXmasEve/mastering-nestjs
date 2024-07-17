@@ -15,6 +15,7 @@ export class DatabaseFactory implements MongooseOptionsFactory {
       this.configService.getOrThrow<DatabaseConfig>(DatabaseConfigName);
 
     const { user, host, port, name, minPoolSize, maxPoolSize } = dbConfig;
+    console.log('dbConfig', dbConfig);
 
     const password = encodeURIComponent(dbConfig.password);
 
