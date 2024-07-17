@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import databaseConfig from './config/database.config';
 import { DatabaseConfigService } from './config/database.config.service';
@@ -11,10 +11,11 @@ import serverConfig from './config/server.config';
     ConfigModule.forRoot({
       load: [serverConfig, databaseConfig],
       cache: true,
-      isGlobal: true,
     }),
     MongooseModule.forRootAsync({
+      imports: [ConfigModule],
       useClass: DatabaseConfigService,
+      inject: [ConfigService],
     }),
     MessageModule,
   ],
